@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <title>Weather Dashboard</title>
+</head>
+
+<body>
+    <header>
+        <h1>Weather Dashboard</h1>
+    </header>
+
+    <!-- main section -->
+    <main class="row">
+        <div class="col-3">
+            <div class="search text-center">
+                <h2 class="search-text">Search for a City</h2>
+                <form class="form-body" id="search-form">
+                    <input class="form-input" id="city-search" type="text" placeholder="San Francisco"><br>
+                    <button type="submit" class="btn" value="Search">Search</button>
+                </form>
+                
+            </div>
+            <div class="text-center">
+                <div class="dividing-line"></div>
+                <!-- city list -->
+                <ul id="city-list">
+                    <li><input type="button" class="btn-list" value="Los Angeles"></li>
+                </ul>
+            </div>
+        </div>
+        <!-- weather displays -->
+        <!-- current weather -->
+        <div class="col-9 ">
+            <div class="div-current-weather">
+                <h1 class="current-weather">Los Angeles<span id="current-weather-date">(4/25/2022)</span><span
+                        id="current-weather-icon">icon</span></h1>
+                <p class="p-current-temp">Temp: <span id="current-temp"></span></p>
+                <p class="p-current-wind">Wind: <span id="current-wind"></span></p>
+                <p class="p-current-humidity">Humidity: <span id="current-humidity"></span></p>
+                <p class="p-current-uv">UV Index: <span id="current-uv"></span></p>
+            </div>
+
+            <!-- 5 day forecast -->
+            <h3 class="font-weight-bold">5 Day Forecast</h3>
+            <div class="weather-cards d-flex justify-content-between font-weight-bold">
+                <div class="weather-card1 card col-2">
+                    <p>4/22/2022<span id="day1-date"></span></p>
+                    <p>icon<span id="day1-icon"></span></p>
+                    <p>Temp: <span id="day1-temp"></span></p>
+                    <p>Wind: <span id="day1-wind"></span></p>
+                    <p>Humidity: <span id="day1-humidity"></span></p>
+                </div>
+                <div class="weather-card2 card col-2">
+                    <p>4/22/2022<span id="day2-date"></span></p>
+                    <p>icon<span id="day2-icon"></span></p>
+                    <p>Temp: <span id="day2-temp"></span></p>
+                    <p>Wind: <span id="day2-wind"></span></p>
+                    <p>Humidity: <span id="day2-humidity"></span></p>
+                </div>
+                <div class="weather-card3 card col-2">
+                    <p>4/22/2022<span id="day3-date"></span></p>
+                    <p>icon<span id="day3-icon"></span></p>
+                    <p>Temp: <span id="day3-temp"></span></p>
+                    <p>Wind: <span id="day3-wind"></span></p>
+                    <p>Humidity: <span id="day3-humidity"></span></p>
+                </div>
+                <div class="weather-card4 card col-2">
+                    <p>4/22/2022<span id="day4-date"></span></p>
+                    <p>icon<span id="day4-icon"></span></p>
+                    <p>Temp: <span id="day4-temp"></span></p>
+                    <p>Wind: <span id="day4-wind"></span></p>
+                    <p>Humidity: <span id="day4-humidity"></span></p>
+                </div>
+                <div class="weather-card5 card col-2">
+                    <p>4/22/2022<span id="day5-date"></span></p>
+                    <p>icon<span id="day5-icon"></span></p>
+                    <p>Temp: <span id="day5-temp"></span></p>
+                    <p>Wind: <span id="day5-wind"></span></p>
+                    <p>Humidity: <span id="day5-humidity"></span></p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="./assets/js/script.js"></script>
+</body>
+
+</html>

@@ -1,6 +1,21 @@
 var searchFormEl = document.querySelector("#search-form");
 var cityInputEl = document.querySelector(".form-input");
 var cityListEl = document.querySelector("#city-list");
+var currentWeatherDate = document.querySelector("#current-weather-date");
+var dayOne = document.querySelector("#day1-date");
+var dayTwo = document.querySelector("#day2-date");
+var dayThree = document.querySelector("#day3-date");
+var dayFour = document.querySelector("#day4-date");
+var dayFive = document.querySelector("#day5-date");
+var currentCity = document.querySelector(".current-weather-city");
+
+// calculate dates
+currentWeatherDate.textContent = " (" + moment().format("MM/DD/YYYY") + ") ";
+dayOne.textContent = moment().add(1, 'd').format("MM/DD/YYYY");
+dayTwo.textContent = moment().add(2, 'd').format("MM/DD/YYYY");
+dayThree.textContent = moment().add(3, 'd').format("MM/DD/YYYY");
+dayFour.textContent = moment().add(4, 'd').format("MM/DD/YYYY");
+dayFive.textContent = moment().add(5, 'd').format("MM/DD/YYYY");
 
 function formHandler(event) {
     // disable form default
@@ -33,6 +48,12 @@ function formHandler(event) {
         citiesArr.push(getCities);
         // add array to local storage
         localStorage.setItem("cities", JSON.stringify(citiesArr));
+
+        // set current city
+        currentCity = city;
+
+        // add current city to local storage
+        localStorage.setItem("currentCity", currentCity);
     }
     else {
 
@@ -41,7 +62,19 @@ function formHandler(event) {
         citiesArr.push(city);
         // add array to local storage
         localStorage.setItem("cities", JSON.stringify(citiesArr));
+
+        // set current city
+        currentCity = city;
+
+        // add current city to local storage
+        localStorage.setItem("currentCity", currentCity);
     }
+
+    // set current city
+    currentCity = city;
+
+    // add current city to local storage
+    localStorage.setItem("currentCity", currentCity);
 
     // clear input field
     cityInputEl.value = "";
@@ -50,6 +83,8 @@ function formHandler(event) {
     loadCities();
 
     location.reload();
+
+
 
 }
 
@@ -98,15 +133,47 @@ function loadCities() {
 
 
     }
+
+    // get current city from local storage
+    currentCityGet = localStorage.getItem("currentCity");
+
+    // set current city
+    currentCity.textContent = currentCityGet;
+
 }
 
 function citiesButtonHandler(event) {
-    console.log(event.target.value);
     var buttonText = event.target.value;
 
-    // pass buttonText to formHandler
-    // formHandler(buttonText);
+    // call getLongLat function and pass the city
+    getLongLat(buttonText);
 }
+
+function getLongLat(str1) {
+
+    var apiKey = "927e70b19315871ba3e2c32f90fee57f";
+
+    // check for space in city name
+    if (str1.match(/\s/)) {
+        // encodeURIComponent(str1).replace(/\s/, "%20");
+        str1.replace(/\s/, "%20");
+    }
+    var apiUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + "'" + str1 + "'" + "&limit=5&appid=" + apiKey;
+
+    console.log(apiUrl);
+
+    // make a fetch request to apiUrl
+    fetch(apiUrl)
+        .then(function (response) {
+            console.log(response);
+            response.json().then(function (data) {
+                var lat = data.lat;
+                console.log(lat)
+            });
+        });
+
+}
+
 
 loadCities();
 searchFormEl.addEventListener("submit", formHandler);

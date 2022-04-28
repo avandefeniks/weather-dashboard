@@ -88,29 +88,6 @@ function formHandler(event) {
 
 }
 
-function saveCityList() {
-    // console.log(string1 + " is a nice city")
-
-    // get city list
-    // var cityButtonsEl = document.querySelectorAll(".btn-list");
-    // var cityButtonsEl = document.querySelectorAll("input[value]");
-    // citiesList = cityButtonsEl.value;
-    // console.log(cityButtonsEl)
-
-    // var citiesArr = [];
-
-    // loop through cities list
-    // for (var i = 0; i < cityButtonsEl.length; i++) {
-    //     // add cities to array
-    //     citiesArr.push(citiesList);
-    //     console.log(citiesArr);
-    // }
-
-    // add array to local storage
-    // localStorage.setItem("cities", JSON.stringify(citiesArr));
-
-}
-
 function loadCities() {
 
     var loadArr = [];
@@ -157,7 +134,7 @@ function getLongLat(str1) {
     if (str1.match(/\s/)) {
         var c = str1.split(' ').join('+');
     }
-    var apiUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + c + "&limit=5&appid=" + apiKey;
+    var apiUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + c + "&limit=1&appid=" + apiKey;
 
     console.log(apiUrl);
 
@@ -169,6 +146,9 @@ function getLongLat(str1) {
       console.log(response);
       response.json().then(function(data) {
         console.log(data);
+        var lat = data[0].lat;
+        var lon = data[0].lon;
+        console.log(lat, lon);
       });
     } else {
       alert("Error: " + response.statusText);

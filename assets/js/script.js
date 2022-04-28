@@ -155,22 +155,28 @@ function getLongLat(str1) {
 
     // check for space in city name
     if (str1.match(/\s/)) {
-        // encodeURIComponent(str1).replace(/\s/, "%20");
-        str1.replace(/\s/, "%20");
+        var c = str1.split(' ').join('+');
     }
-    var apiUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + "'" + str1 + "'" + "&limit=5&appid=" + apiKey;
+    var apiUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + c + "&limit=5&appid=" + apiKey;
 
     console.log(apiUrl);
 
-    // make a fetch request to apiUrl
-    fetch(apiUrl)
-        .then(function (response) {
-            console.log(response);
-            response.json().then(function (data) {
-                var lat = data.lat;
-                console.log(lat)
-            });
-        });
+     // make a get request to url
+  fetch(apiUrl)
+  .then(function(response) {
+    // request was successful
+    if (response.ok) {
+      console.log(response);
+      response.json().then(function(data) {
+        console.log(data);
+      });
+    } else {
+      alert("Error: " + response.statusText);
+    }
+  })
+  .catch(function(error) {
+    alert("Unable to connect to Open Weather");
+  });
 
 }
 

@@ -1,6 +1,7 @@
 var searchFormEl = document.querySelector("#search-form");
 var cityInputEl = document.querySelector(".form-input");
 var cityListEl = document.querySelector("#city-list");
+var cityListLiEl = document.querySelectorAll("input");
 var currentWeatherDate = document.querySelector("#current-weather-date");
 var dayTwo = document.querySelector("#day2-date");
 var dayThree = document.querySelector("#day3-date");
@@ -29,6 +30,7 @@ function formHandler(event) {
         alert("Please enter a city")
         return;
     }
+
 
     // add cities to list
     var listItemEl = document.createElement("li");
@@ -65,22 +67,23 @@ function formHandler(event) {
         // set current city
         currentCity = city;
 
+        // check to see if city exists in list
+        var cityListLiEl = document.querySelectorAll("input");
+
         // add current city to local storage
         localStorage.setItem("currentCity", currentCity);
+
     }
 
-    // set current city
-    currentCity = city;
-
-    // add current city to local storage
-    // localStorage.setItem("currentCity", currentCity);
 
     // clear input field
     cityInputEl.value = "";
 
-    loadCities();
+    // loadCities();
 
-    location.reload();
+    getLongLat(city);
+
+    // location.reload();
 
 }
 
@@ -107,7 +110,9 @@ function loadCities() {
         // get current city from local storage
         currentWeatherDate.textContent = localStorage.getItem("currentCity") + " (" + moment().format("MM/DD/YYYY") + ") ";
     }
+
 }
+
 
 
 function citiesButtonHandler(event) {
@@ -117,12 +122,15 @@ function citiesButtonHandler(event) {
     // add buttonText to local storage as currentCity
     localStorage.setItem("currentCity", buttonText);
 
-    loadCities();
+    currentCity.textContent = currentWeatherDate.textContent = localStorage.getItem("currentCity") + " (" + moment().format("MM/DD/YYYY") + ") ";
 
-    // call getLongLat function and pass the city
+    // var dayTwoIconEl = document.querySelector("#day2-icon");
+    // dayTwoIconEl.style.display = "none"; 
+
+    // pass the city for long and lat look up
     getLongLat(buttonText);
 
-
+    location.reload
 
 }
 
@@ -139,14 +147,14 @@ function getLongLat(str1) {
         var apiUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + str1 + "&limit=1&appid=" + apiKey;
     }
 
-    console.log(apiUrl);
+    // console.log(apiUrl);
 
     // make a get request to url
     fetch(apiUrl)
         .then(function (response) {
             // request was successful
             if (response.ok) {
-                console.log(response);
+                // console.log(response);
                 response.json().then(function (data) {
                     // console.log(data);
                     var lat = data[0].lat;
@@ -169,6 +177,7 @@ function getLongLat(str1) {
 }
 
 function getWeather(lat1, lon1) {
+    // location.reload();
 
     var apiKey = "927e70b19315871ba3e2c32f90fee57f";
     var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat1 + "&lon=" + lon1 +
@@ -179,7 +188,8 @@ function getWeather(lat1, lon1) {
     var currentWindEl = document.querySelector("#current-wind");
     var currentHumidityEl = document.querySelector("#current-humidity");
     var currentUvEl = document.querySelector("#current-uv");
-    var dayTwoIconEl = document.querySelector("#day2-icon"); ("#day2-temp");
+
+    var dayTwoIconEl = document.querySelector("#day2-icon");
     var dayTwoTempEl = document.querySelector("#day2-temp");
     var dayTwoWindEl = document.querySelector("#day2-wind");
     var dayTwoHumidityEl = document.querySelector("#day2-humidity");
@@ -224,7 +234,7 @@ function getWeather(lat1, lon1) {
                     iconImage.setAttribute("height", "75px");
                     currentIconEl.appendChild(iconImage);
 
-                    currentTempEl.textContent = data.current.temp;
+                    currentTempEl.textContent = data.current.temp + " F";
                     currentWindEl.textContent = data.current.wind_speed + " MPH";
                     currentHumidityEl.textContent = Math.round(data.current.humidity) + "%";
 
@@ -247,11 +257,14 @@ function getWeather(lat1, lon1) {
                     }
                     // day two weather
                     // day two icon
+                    // dayTwoIconEl.style.display = "none";
                     var iconTwoImage = document.createElement("img");
                     iconTwoImage.src = "http://openweathermap.org/img/wn/" + data.daily[0].weather[0].icon + "@2x.png";
                     iconTwoImage.setAttribute("width", "50px");
                     iconTwoImage.setAttribute("height", "50px");
                     dayTwoIconEl.appendChild(iconTwoImage);
+                    // dayTwoIconEl.style.display = "block";
+
 
                     dayTwoTempEl.textContent = data.daily[0].temp.max;
                     dayTwoWindEl.textContent = data.daily[0].wind_speed;
@@ -331,10 +344,10 @@ function waitTime(ms) {
 
 loadCities();
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     currentCity.textContent = ""
     currentCity.style.display = "none";
 
-  });  
+});
 searchFormEl.addEventListener("submit", formHandler);
 cityListEl.addEventListener("click", citiesButtonHandler);

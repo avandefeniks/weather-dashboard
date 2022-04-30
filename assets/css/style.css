@@ -92,6 +92,15 @@ header h1 {
     border-radius: 4px;
 }
 
-/* #day2-temp {
-    color: white;
-} */
+.humidity2,
+.humidity3,
+.humidity4,
+.humidity5,
+.humidity6 {
+    font-size: 14px;
+}
+
+.card-row {
+    max-width: 100%;
+    border: 1px solid black;
+}

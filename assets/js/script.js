@@ -9,6 +9,7 @@ var dayFour = document.querySelector("#day4-date");
 var dayFive = document.querySelector("#day5-date");
 var daySix = document.querySelector("#day6-date");
 var currentCity = document.querySelector(".current-weather-city");
+var clearSearch = document.querySelector("#clear-search");
 
 // calculate dates
 dayTwo.textContent = moment().add(1, 'd').format("MM/DD/YYYY");
@@ -78,6 +79,8 @@ function formHandler(event) {
 
     // clear input field
     cityInputEl.value = "";
+
+    currentWeatherDate.textContent = localStorage.getItem("currentCity") + " (" + moment().format("MM/DD/YYYY") + ") ";
 
     // loadCities();
 
@@ -167,7 +170,7 @@ function getLongLat(str1) {
             }
         })
         .catch(function (error) {
-            alert("getLongLat");
+            alert("Can't access open weather API with getLonLat function");
         });
 
     // pause time to wait for promise
@@ -258,6 +261,7 @@ function getWeather(lat1, lon1) {
                     // day two weather
                     // day two icon
                     // dayTwoIconEl.style.display = "none";
+                    dayTwoIconEl.innerHTML = ""
                     var iconTwoImage = document.createElement("img");
                     iconTwoImage.src = "http://openweathermap.org/img/wn/" + data.daily[0].weather[0].icon + "@2x.png";
                     iconTwoImage.setAttribute("width", "50px");
@@ -272,6 +276,7 @@ function getWeather(lat1, lon1) {
 
                     // day three weather
                     // day three icon
+                    dayThreeIconEl.innerHTML = ""
                     var iconThreeImage = document.createElement("img");
                     iconThreeImage.src = "http://openweathermap.org/img/wn/" + data.daily[1].weather[0].icon + "@2x.png";
                     iconThreeImage.setAttribute("width", "50px");
@@ -284,6 +289,7 @@ function getWeather(lat1, lon1) {
 
                     // day four weather
                     // day four icon
+                    dayFourIconEl.innerHTML = ""
                     var iconFourImage = document.createElement("img");
                     iconFourImage.src = "http://openweathermap.org/img/wn/" + data.daily[2].weather[0].icon + "@2x.png";
                     iconFourImage.setAttribute("width", "50px");
@@ -296,6 +302,7 @@ function getWeather(lat1, lon1) {
 
                     // day five weather
                     // day five icon
+                    dayFiveIconEl.innerHTML = ""
                     var iconFiveImage = document.createElement("img");
                     iconFiveImage.src = "http://openweathermap.org/img/wn/" + data.daily[3].weather[0].icon + "@2x.png";
                     iconFiveImage.setAttribute("width", "50px");
@@ -308,6 +315,7 @@ function getWeather(lat1, lon1) {
 
                     // daysix weather
                     // day six icon
+                    daySixIconEl.innerHTML = ""
                     var iconSixImage = document.createElement("img");
                     iconSixImage.src = "http://openweathermap.org/img/wn/" + data.daily[4].weather[0].icon + "@2x.png";
                     iconSixImage.setAttribute("width", "50px");
@@ -327,7 +335,7 @@ function getWeather(lat1, lon1) {
             }
         })
         .catch(function (error) {
-            alert("Get Weather");
+            alert("Can't access open weather API with getWeather function");
         });
 
 }
@@ -341,6 +349,16 @@ function waitTime(ms) {
     }
 }
 
+// function clearSearchList(event) {
+//     // stop browser from refreshing
+//     event.preventDefault();
+
+//     // clear city list
+//     localStorage.removeItem("cities");
+
+//     // force a reload
+//     location.reload();
+// }
 
 loadCities();
 
@@ -351,3 +369,4 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 searchFormEl.addEventListener("submit", formHandler);
 cityListEl.addEventListener("click", citiesButtonHandler);
+// clearSearch.addEventListener("click", clearSearchList);

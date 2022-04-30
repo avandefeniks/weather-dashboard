@@ -1,3 +1,3 @@
 # Weather Dashboard
 
-![](../assets/images/WeatherDashboad.jpg)
+![](https://github.com/avandefeniks/weather-dashboard/blob/main/assets/images/WeatherDashboard.jpg)

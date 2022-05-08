@@ -32,13 +32,6 @@ function formHandler(event) {
         return;
     }
 
-
-    // add cities to list
-    var listItemEl = document.createElement("li");
-    listItemEl.innerHTML = "<input type='button' class='btn-list' value=" + "'" + city + "'" + ">"
-    // console.log(listItemEl.innerHTML);
-    cityListEl.appendChild(listItemEl);
-
     // get cities list from local storage
     var getCities = JSON.parse(localStorage.getItem("cities"));
 
@@ -60,20 +53,37 @@ function formHandler(event) {
     else {
 
         citiesArr = JSON.parse(localStorage.getItem("cities"));
-        // add city to array
-        citiesArr.push(city);
-        // add array to local storage
-        localStorage.setItem("cities", JSON.stringify(citiesArr));
 
-        // set current city
-        currentCity = city;
+        // check cities array to see if city exists
+        if (citiesArr.indexOf(city, 0) !== -1) {
 
-        // check to see if city exists in list
-        var cityListLiEl = document.querySelectorAll("input");
+             // add current city to local storage
+             localStorage.setItem("currentCity", currentCity);
 
-        // add current city to local storage
-        localStorage.setItem("currentCity", currentCity);
+            currentWeatherDate.textContent = localStorage.getItem("currentCity") + " (" + moment().format("MM/DD/YYYY") + ") ";
+        }
+        else {
 
+            // add cities to list
+            var listItemEl = document.createElement("li");
+            listItemEl.innerHTML = "<input type='button' class='btn-list' value=" + "'" + city + "'" + ">"
+            // console.log(listItemEl.innerHTML);
+            cityListEl.appendChild(listItemEl);
+
+            // add city to array
+            citiesArr.push(city);
+            // add array to local storage
+            localStorage.setItem("cities", JSON.stringify(citiesArr));
+
+            // set current city
+            currentCity = city;
+
+            // add current city to local storage
+            localStorage.setItem("currentCity", currentCity);
+
+            currentWeatherDate.textContent = localStorage.getItem("currentCity") + " (" + moment().format("MM/DD/YYYY") + ") ";
+
+        }
     }
 
 
@@ -144,10 +154,10 @@ function getLongLat(str1) {
     // check for space in city name
     if (str1.match(/\s/)) {
         var c = str1.split(' ').join('+');
-        var apiUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + c + "&limit=1&appid=" + apiKey;
+        var apiUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + c + "&limit=1&appid=" + apiKey;
     }
     else {
-        var apiUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + str1 + "&limit=1&appid=" + apiKey;
+        var apiUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + str1 + "&limit=1&appid=" + apiKey;
     }
 
     // console.log(apiUrl);
@@ -232,7 +242,7 @@ function getWeather(lat1, lon1) {
                     // current weather information
                     // current icon
                     var iconImage = document.createElement("img");
-                    iconImage.src = "http://openweathermap.org/img/wn/" + data.current.weather[0].icon + "@2x.png";
+                    iconImage.src = "https://openweathermap.org/img/wn/" + data.current.weather[0].icon + "@2x.png";
                     iconImage.setAttribute("width", "75px");
                     iconImage.setAttribute("height", "75px");
                     currentIconEl.appendChild(iconImage);
@@ -263,7 +273,7 @@ function getWeather(lat1, lon1) {
                     // dayTwoIconEl.style.display = "none";
                     dayTwoIconEl.innerHTML = ""
                     var iconTwoImage = document.createElement("img");
-                    iconTwoImage.src = "http://openweathermap.org/img/wn/" + data.daily[0].weather[0].icon + "@2x.png";
+                    iconTwoImage.src = "https://openweathermap.org/img/wn/" + data.daily[0].weather[0].icon + "@2x.png";
                     iconTwoImage.setAttribute("width", "50px");
                     iconTwoImage.setAttribute("height", "50px");
                     dayTwoIconEl.appendChild(iconTwoImage);
@@ -278,7 +288,7 @@ function getWeather(lat1, lon1) {
                     // day three icon
                     dayThreeIconEl.innerHTML = ""
                     var iconThreeImage = document.createElement("img");
-                    iconThreeImage.src = "http://openweathermap.org/img/wn/" + data.daily[1].weather[0].icon + "@2x.png";
+                    iconThreeImage.src = "https://openweathermap.org/img/wn/" + data.daily[1].weather[0].icon + "@2x.png";
                     iconThreeImage.setAttribute("width", "50px");
                     iconThreeImage.setAttribute("height", "50px");
                     dayThreeIconEl.appendChild(iconThreeImage);
@@ -291,7 +301,7 @@ function getWeather(lat1, lon1) {
                     // day four icon
                     dayFourIconEl.innerHTML = ""
                     var iconFourImage = document.createElement("img");
-                    iconFourImage.src = "http://openweathermap.org/img/wn/" + data.daily[2].weather[0].icon + "@2x.png";
+                    iconFourImage.src = "https://openweathermap.org/img/wn/" + data.daily[2].weather[0].icon + "@2x.png";
                     iconFourImage.setAttribute("width", "50px");
                     iconFourImage.setAttribute("height", "50px");
                     dayFourIconEl.appendChild(iconFourImage);
@@ -304,7 +314,7 @@ function getWeather(lat1, lon1) {
                     // day five icon
                     dayFiveIconEl.innerHTML = ""
                     var iconFiveImage = document.createElement("img");
-                    iconFiveImage.src = "http://openweathermap.org/img/wn/" + data.daily[3].weather[0].icon + "@2x.png";
+                    iconFiveImage.src = "https://openweathermap.org/img/wn/" + data.daily[3].weather[0].icon + "@2x.png";
                     iconFiveImage.setAttribute("width", "50px");
                     iconFiveImage.setAttribute("height", "50px");
                     dayFiveIconEl.appendChild(iconFiveImage);
@@ -317,7 +327,7 @@ function getWeather(lat1, lon1) {
                     // day six icon
                     daySixIconEl.innerHTML = ""
                     var iconSixImage = document.createElement("img");
-                    iconSixImage.src = "http://openweathermap.org/img/wn/" + data.daily[4].weather[0].icon + "@2x.png";
+                    iconSixImage.src = "https://openweathermap.org/img/wn/" + data.daily[4].weather[0].icon + "@2x.png";
                     iconSixImage.setAttribute("width", "50px");
                     iconSixImage.setAttribute("height", "50px");
                     daySixIconEl.appendChild(iconSixImage);
